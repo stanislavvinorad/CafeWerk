@@ -19,13 +19,13 @@
             font-size: 3em;
             color: #333;
         }
-        .language-buttons {
+        .language-buttons, .back-button {
             margin-top: 20px;
             display: flex;
             justify-content: center;
             flex-wrap: wrap;
         }
-        .language-buttons button {
+        .language-buttons button, .back-button button {
             font-size: 1.2em;
             padding: 10px 20px;
             margin: 5px;
@@ -34,7 +34,7 @@
             border-radius: 5px;
             transition: background-color 0.3s;
         }
-        .language-buttons button:hover {
+        .language-buttons button:hover, .back-button button:hover {
             background-color: #ddd;
         }
         .menu-section {
@@ -62,7 +62,7 @@
         }
 
         @media (max-width: 768px) {
-            .language-buttons button {
+            .language-buttons button, .back-button button {
                 margin: 5px;
             }
             .menu-item h3 {
@@ -70,6 +70,19 @@
             }
             .menu-item p {
                 font-size: 0.9em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .language-buttons button, .back-button button {
+                padding: 8px 16px;
+                font-size: 1em;
+            }
+            .menu-item h3 {
+                font-size: 1.1em;
+            }
+            .menu-item p {
+                font-size: 0.8em;
             }
         }
     </style>
@@ -86,6 +99,10 @@
         <!-- Menu will be dynamically updated here -->
     </div>
 
+    <div class="back-button" style="display: none;">
+        <button onclick="showLanguageButtons()">Back to Language Selection</button>
+    </div>
+
     <script>
         const menuData = {
             de: {
@@ -95,10 +112,10 @@
                     { name: "Deutsches Frühstück", description: "Geräucherte Mettwurst, Tilsiter, Brie, Fleischsalat und ein gekochtes Ei oder Rührei, Konfitüre (Erdbeer oder Kirsch), Butter. Dazu reichen wir 1 dunkles Brötchen, 1 Scheibe Vollkornbrot und 1 helles Brötchen.", price: "9,90" },
                     { name: "Vegetarisches Frühstück", description: "Joghurt mit Früchten, Avocadocreme, Tilsiter, Konfitüre (Erdbeer oder Kirsch), Butter. Dazu reichen wir 1 dunkles Brötchen, 1 Scheibe Vollkornbrot und 1 helles Brötchen.", price: "10,90" },
                     { name: "Power-Frühstück", description: "Früchte- und Schokocrunchmüsli, Joghurt, gemischtes Obst der Saison, Orangensaft 0,1 l", price: "11,90" },
-                    { name: "Veganes Frühstück", description: "Zwei vegane Aufstriche (Humus und Avocadocreme), Falafel, gemischte Gemüsesticks, Konfitüre (Erdbeer oder Kirsch), Magarine. Dazu reichen wir 1 dunkles Brötchen, 1 Scheibe Vollkornbrot und 1 helles Brötchen.", price: "12,90" },
-                    { name: "Dänisches Frühstück", description: "Graved Lachs mit HonigSenfSauce, Heringssalat, Tilsiter, Brie, ein gekochtes Ei oder Rührei, Konfitüre (Erdbeer oder Kirsch), Butter. Dazu reichen wir 1 dunkles Brötchen, 1 Scheibe Vollkornbrot und 1 helles Brötchen.", price: "12,90" },
-                    { name: "Italienisches Frühstück", description: "Büffelmozzarella mit Tomaten und hausgemachtem Pesto, Fenchelsalami, Mortadella, luftgetrockneter italienischer Schinken, Honigmelone, Pecorinokäse und frischem Ciabattabrot.", price: "13,90" },
-                    { name: "Spanisches Frühstück", description: "Gegrillte Chorizo, Spanischer Aufschnitt, Manchegokäse, warme Kartoffeltortilla, Pastel de Nata, Butter und frisches Ciabatta.", price: "13,90" }
+                    { name: "Veganes Frühstück", description: "Zwei vegane Aufstriche (Humus und Avocadocreme), Falafel, gemischte Gemüsesticks, Konfitüre (Erdbeer oder Kirsch), Magarine. Dazu reichen wir 1 dunkles Brötchen, 1 Scheibe Vollkornbrot и 1 helles Brötchen.", price: "12,90" },
+                    { name: "Dänisches Frühstück", description: "Graved Lachs mit HonigSenfSauce, Heringssalat, Tilsiter, Brie, ein gekochtes Ei oder Rührei, Konfitüre (Erdbeer или Kirsch), Butter. Dazu reichen wir 1 dunkles Brötchen, 1 Scheibe Vollkornbrot и 1 helles Brötchen.", price: "12,90" },
+                    { name: "Italienisches Frühstück", description: "Büffelmozzarella mit Tomaten und hausgemachtem Pesto, Fenchelsalami, Mortadella, luftgetrockneter italienischer Schinken, Honigmelone, Pecorinokäse и frischeм Ciabattabrot.", price: "13,90" },
+                    { name: "Spanisches Frühstück", description: "Gegrillte Chorizo, Spanischer Aufschnitt, Manchegokäse, warme Kartoffeltortilla, Pastel de Nata, Butter и frisches Ciabatta.", price: "13,90" }
                 ]
             },
             en: {
@@ -143,9 +160,18 @@
                 `;
             });
             menuContainer.innerHTML = html;
+            document.querySelector('.language-buttons').style.display = 'none';
+            document.querySelector('.back-button').style.display = 'flex';
         }
 
-       
+        function showLanguageButtons() {
+            document.querySelector('.language-buttons').style.display = 'flex';
+            document.querySelector('.back-button').style.display = 'none';
+            document.getElementById('menu').innerHTML = ''; // Clear the menu content
+        }
+
+        // Initialize with no default language
+        document.getElementById('menu').innerHTML = '';
     </script>
 </body>
 </html>
