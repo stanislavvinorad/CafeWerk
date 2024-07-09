@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cafe Werk</title>
+    <title>Cafe Werk Menu</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -34,25 +34,116 @@
         .language-buttons button:hover {
             background-color: #ddd;
         }
+        .menu-section {
+            text-align: left;
+            margin-top: 20px;
+        }
+        .menu-section h2 {
+            font-size: 2em;
+            color: #555;
+        }
+        .menu-item {
+            margin-bottom: 20px;
+        }
+        .menu-item h3 {
+            font-size: 1.5em;
+            margin-bottom: 5px;
+        }
+        .menu-item p {
+            margin: 0;
+        }
+        .menu-item .price {
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
     <h1>Cafe Werk</h1>
     <div class="language-buttons">
+        <button onclick="changeLanguage('de')">Deutsch</button>
         <button onclick="changeLanguage('en')">English</button>
         <button onclick="changeLanguage('da')">Dansk</button>
     </div>
 
+    <div id="menu" class="menu-section">
+        <!-- Menu will be dynamically updated here -->
+    </div>
+
     <script>
-        function changeLanguage(lang) {
-            if (lang === 'en') {
-                alert('You selected English');
-                // Here you can add the functionality to change the language to English
-            } else if (lang === 'da') {
-                alert('Du valgte Dansk');
-                // Here you can add the functionality to change the language to Danish
+        const menuData = {
+            de: {
+                title: "Der Start in den Tag",
+                items: [
+                    { name: "Französisches Frühstück", description: "Briochezopf in Scheiben, portugiesischer Croissant, Konfitüre (Erdbeer oder Kirsch), Butter, gemischtes Obst der Saison", price: "8,50" },
+                    { name: "Deutsches Frühstück", description: "Geräucherte Mettwurst, Tilsiter, Brie, Fleischsalat und ein gekochtes Ei oder Rührei, Konfitüre (Erdbeer oder Kirsch), Butter. Dazu reichen wir 1 dunkles Brötchen, 1 Scheibe Vollkornbrot und 1 helles Brötchen.", price: "9,90" },
+                    { name: "Vegetarisches Frühstück", description: "Joghurt mit Früchten, Avocadocreme, Tilsiter, Konfitüre (Erdbeer oder Kirsch), Butter. Dazu reichen wir 1 dunkles Brötchen, 1 Scheibe Vollkornbrot und 1 helles Brötchen.", price: "10,90" },
+                    { name: "Power-Frühstück", description: "Früchte- und Schokocrunchmüsli, Joghurt, gemischtes Obst der Saison, Orangensaft 0,1 l", price: "11,90" },
+                    { name: "Veganes Frühstück", description: "Zwei vegane Aufstriche (Humus und Avocadocreme), Falafel, gemischte Gemüsesticks, Konfitüre (Erdbeer oder Kirsch), Magarine. Dazu reichen wir 1 dunkles Brötchen, 1 Scheibe Vollkornbrot und 1 helles Brötchen.", price: "12,90" },
+                    { name: "Dänisches Frühstück", description: "Graved Lachs mit HonigSenfSauce, Heringssalat, Tilsiter, Brie, ein gekochtes Ei oder Rührei, Konfitüre (Erdbeer oder Kirsch), Butter. Dazu reichen wir 1 dunkles Brötchen, 1 Scheibe Vollkornbrot und 1 helles Brötchen.", price: "12,90" },
+                    { name: "Italienisches Frühstück", description: "Büffelmozzarella mit Tomaten und hausgemachtem Pesto, Fenchelsalami, Mortadella, luftgetrockneter italienischer Schinken, Honigmelone, Pecorinokäse und frischem Ciabattabrot.", price: "13,90" },
+                    { name: "Spanisches Frühstück", description: "Gegrillte Chorizo, Spanischer Aufschnitt, Manchegokäse, warme Kartoffeltortilla, Pastel de Nata, Butter und frisches Ciabatta.", price: "13,90" }
+                ]
+            },
+            en: {
+                title: "Start of the Day",
+                items: [
+                    { name: "French Breakfast", description: "Sliced brioche braid, Portuguese croissant, jam (strawberry or cherry), butter, mixed seasonal fruit", price: "8.50" },
+                    { name: "German Breakfast", description: "Smoked Mettwurst, Tilsiter, Brie, meat salad and a boiled egg or scrambled eggs, jam (strawberry or cherry), butter. We serve 1 dark bread roll, 1 slice of whole grain bread, and 1 light bread roll.", price: "9.90" },
+                    { name: "Vegetarian Breakfast", description: "Yogurt with fruits, avocado cream, Tilsiter, jam (strawberry or cherry), butter. We serve 1 dark bread roll, 1 slice of whole grain bread, and 1 light bread roll.", price: "10.90" },
+                    { name: "Power Breakfast", description: "Fruit and chocolate crunch muesli, yogurt, mixed seasonal fruit, 0.1 l orange juice", price: "11.90" },
+                    { name: "Vegan Breakfast", description: "Two vegan spreads (hummus and avocado cream), falafel, mixed vegetable sticks, jam (strawberry or cherry), margarine. We serve 1 dark bread roll, 1 slice of whole grain bread, and 1 light bread roll.", price: "12.90" },
+                    { name: "Danish Breakfast", description: "Graved salmon with honey mustard sauce, herring salad, Tilsiter, Brie, a boiled egg or scrambled eggs, jam (strawberry or cherry), butter. We serve 1 dark bread roll, 1 slice of whole grain bread, and 1 light bread roll.", price: "12.90" },
+                    { name: "Italian Breakfast", description: "Buffalo mozzarella with tomatoes and homemade pesto, fennel salami, mortadella, air-dried Italian ham, honeydew melon, Pecorino cheese and fresh ciabatta bread.", price: "13.90" },
+                    { name: "Spanish Breakfast", description: "Grilled chorizo, Spanish cold cuts, Manchego cheese, warm potato tortilla, Pastel de Nata, butter and fresh ciabatta.", price: "13.90" }
+                ]
+            },
+            da: {
+                title: "Start på dagen",
+                items: [
+                    { name: "Fransk morgenmad", description: "Skiver af briocheflet, portugisisk croissant, marmelade (jordbær eller kirsebær), smør, blandet sæsonens frugt", price: "8,50" },
+                    { name: "Tysk morgenmad", description: "Røget Mettwurst, Tilsiter, Brie, kødsalat og et kogt æg eller røræg, marmelade (jordbær eller kirsebær), smør. Vi serverer 1 mørk bolle, 1 skive fuldkornsbrød og 1 lys bolle.", price: "9,90" },
+                    { name: "Vegetarisk morgenmad", description: "Yoghurt med frugt, avocado creme, Tilsiter, marmelade (jordbær eller kirsebær), smør. Vi serverer 1 mørk bolle, 1 skive fuldkornsbrød og 1 lys bolle.", price: "10,90" },
+                    { name: "Power morgenmad", description: "Frugt- og chokoladecrunchmüsli, yoghurt, blandet sæsonens frugt, 0,1 l appelsinjuice", price: "11,90" },
+                    { name: "Vegansk morgenmad", description: "To veganske pålæg (hummus og avocado creme), falafel, blandede grøntsagsstave, marmelade (jordbær eller kirsebær), margarine. Vi serverer 1 mørk bolle, 1 skive fuldkornsbrød og 1 lys bolle.", price: "12,90" },
+                    { name: "Dansk morgenmad", description: "Graved laks med honningsennepssauce, sildesalat, Tilsiter, Brie, et kogt æg eller røræg, marmelade (jordbær eller kirsebær), smør. Vi serverer 1 mørk bolle, 1 skive fuldkornsbrød og 1 lys bolle.", price: "12,90" },
+                    { name: "Italiensk morgenmad", description: "Buffelmozzarella med tomater og hjemmelavet pesto, fennikelsalami, mortadella, lufttørret italiensk skinke, honningmelon, Pecorino ost og frisk ciabattabrød.", price: "13,90" },
+                    { name: "Spansk morgenmad", description: "Grillet chorizo, spanske pålæg, Manchego ost, varm kartoffel tortilla, Pastel de Nata, smør og frisk ciabatta.", price: "13,90" }
+                ]
             }
+        };
+
+        function changeLanguage(lang) {
+            const menu = document.getElementById('menu');
+            menu.innerHTML = '';
+            const selectedMenu = menuData[lang];
+
+            const title = document.createElement('h2');
+            title.textContent = selectedMenu.title;
+            menu.appendChild(title);
+
+            selectedMenu.items.forEach(item => {
+                const menuItem = document.createElement('div');
+                menuItem.className = 'menu-item';
+
+                const itemName = document.createElement('h3');
+                itemName.textContent = item.name;
+                menuItem.appendChild(itemName);
+
+                const itemDescription = document.createElement('p');
+                itemDescription.textContent = item.description;
+                menuItem.appendChild(itemDescription);
+
+                const itemPrice = document.createElement('p');
+                itemPrice.className = 'price';
+                itemPrice.textContent = item.price;
+                menuItem.appendChild(itemPrice);
+
+                menu.appendChild(menuItem);
+            });
         }
+
+        // Initialize the menu with the default language (English)
+        changeLanguage('en');
     </script>
 </body>
 </html>
